@@ -1,86 +1,786 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamza Bin Sajid – Full Stack & DevOps Engineer</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Hamza Sajid — Full-Stack Architect, AWS Engineer & DevOps Lead. Building scalable products from Milan."/>
+<meta property="og:title" content="Hamza Sajid — Full-Stack Architect & Cloud Engineer"/>
+<meta property="og:description" content="Senior engineer turned team lead. Laravel, AWS, Docker, Next.js. Open for consulting."/>
+<meta property="og:url" content="https://hamzazbinsajid.github.io"/>
+<title>Hamza Sajid — Full-Stack Architect & Cloud Engineer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+
+<style>
+/* ── THEMES ── */
+:root {
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --radius: 10px;
+  --transition: 0.2s ease;
+}
+
+[data-theme="dark"] {
+  --bg: #0d0d0d;
+  --bg2: #141414;
+  --bg3: #1a1a1a;
+  --border: #272727;
+  --text: #e8e8e8;
+  --muted: #777;
+  --subtle: #444;
+  --accent: #4f8ef7;
+  --accent-bg: rgba(79,142,247,0.1);
+  --tag-bg: #1e1e1e;
+  --tag-text: #aaa;
+  --card-bg: #141414;
+  --nav-bg: rgba(13,13,13,0.92);
+}
+
+[data-theme="light"] {
+  --bg: #fafafa;
+  --bg2: #f2f2f2;
+  --bg3: #ebebeb;
+  --border: #e0e0e0;
+  --text: #111;
+  --muted: #888;
+  --subtle: #bbb;
+  --accent: #1a56db;
+  --accent-bg: rgba(26,86,219,0.08);
+  --tag-bg: #f0f0f0;
+  --tag-text: #555;
+  --card-bg: #fff;
+  --nav-bg: rgba(250,250,250,0.92);
+}
+
+/* Accent colour palettes for theme switcher */
+[data-theme="dark"][data-accent="emerald"] { --accent:#34d399; --accent-bg:rgba(52,211,153,0.10); }
+[data-theme="dark"][data-accent="violet"]  { --accent:#a78bfa; --accent-bg:rgba(167,139,250,0.10); }
+[data-theme="dark"][data-accent="amber"]   { --accent:#fbbf24; --accent-bg:rgba(251,191,36,0.10); }
+[data-theme="dark"][data-accent="rose"]    { --accent:#fb7185; --accent-bg:rgba(251,113,133,0.10); }
+[data-theme="light"][data-accent="emerald"]{ --accent:#059669; --accent-bg:rgba(5,150,105,0.08); }
+[data-theme="light"][data-accent="violet"] { --accent:#7c3aed; --accent-bg:rgba(124,58,237,0.08); }
+[data-theme="light"][data-accent="amber"]  { --accent:#d97706; --accent-bg:rgba(217,119,6,0.08); }
+[data-theme="light"][data-accent="rose"]   { --accent:#e11d48; --accent-bg:rgba(225,29,72,0.08); }
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  transition: background var(--transition), color var(--transition);
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ── LAYOUT ── */
+.container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px; max-width: 860px; margin: 0 auto; padding: 0 24px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 16px; font-weight: 700;
+  color: var(--text);
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a {
+  font-size: 13px; color: var(--muted);
+  transition: color var(--transition);
+}
+.nav-links a:hover { color: var(--text); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+/* theme toggle */
+.theme-toggle {
+  background: none; border: 1px solid var(--border);
+  border-radius: 6px; padding: 5px 10px;
+  color: var(--muted); font-size: 13px; cursor: pointer;
+  transition: all var(--transition); font-family: var(--font-body);
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--subtle); }
+
+/* accent dots */
+.accent-switcher { display: flex; gap: 6px; align-items: center; }
+.accent-dot {
+  width: 14px; height: 14px; border-radius: 50%; cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.accent-dot:hover { transform: scale(1.2); }
+.accent-dot.active { border-color: var(--text); }
+.accent-dot[data-a="blue"]    { background: #4f8ef7; }
+.accent-dot[data-a="emerald"] { background: #34d399; }
+.accent-dot[data-a="violet"]  { background: #a78bfa; }
+.accent-dot[data-a="amber"]   { background: #fbbf24; }
+.accent-dot[data-a="rose"]    { background: #fb7185; }
+
+/* ── HERO ── */
+.hero {
+  padding: 100px 0 80px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent-bg); color: var(--accent);
+  font-size: 12px; font-weight: 500; letter-spacing: .04em;
+  padding: 5px 12px; border-radius: 999px;
+  border: 1px solid var(--accent); margin-bottom: 28px;
+  opacity: 0.9;
+}
+.hero-eyebrow::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)}
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800; line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.hero h1 em { color: var(--accent); font-style: normal; }
+.hero-sub {
+  font-size: 17px; color: var(--muted);
+  max-width: 560px; margin-bottom: 36px; line-height: 1.65;
+}
+.hero-sub strong { color: var(--text); font-weight: 500; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+.btn-primary {
+  background: var(--accent); color: #fff;
+  padding: 10px 22px; border-radius: var(--radius);
+  font-size: 14px; font-weight: 600;
+  transition: opacity var(--transition);
+  border: none; cursor: pointer;
+}
+.btn-primary:hover { opacity: 0.85; }
+.btn-secondary {
+  background: none; color: var(--text);
+  padding: 10px 22px; border-radius: var(--radius);
+  border: 1px solid var(--border); font-size: 14px;
+  transition: border-color var(--transition), color var(--transition);
+  cursor: pointer;
+}
+.btn-secondary:hover { border-color: var(--subtle); }
+.hero-stats {
+  display: flex; gap: 40px; flex-wrap: wrap;
+}
+.stat-item { }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 800; color: var(--text);
+  line-height: 1;
+}
+.stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+/* ── SECTION ── */
+section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+section:last-of-type { border-bottom: none; }
+.section-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700; line-height: 1.2;
+  margin-bottom: 12px; color: var(--text);
+}
+.section-sub { font-size: 15px; color: var(--muted); margin-bottom: 48px; max-width: 520px; }
+
+/* ── NOW ── */
+.now-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px; margin-top: 32px;
+}
+.now-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px;
+}
+.now-badge {
+  font-size: 10px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--accent);
+  background: var(--accent-bg); padding: 3px 8px;
+  border-radius: 4px; display: inline-block; margin-bottom: 10px;
+}
+.now-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+
+/* ── PROJECTS ── */
+.projects-grid {
+  display: grid; grid-template-columns: 1fr; gap: 16px;
+}
+.project-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px 28px;
+  transition: border-color var(--transition), transform 0.15s;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 16px; align-items: start;
+}
+.project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.project-name {
+  font-family: var(--font-display); font-size: 18px;
+  font-weight: 700; color: var(--text); margin-bottom: 6px;
+}
+.project-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+.tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag {
+  font-size: 12px; background: var(--tag-bg); color: var(--tag-text);
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border);
+}
+.project-link {
+  font-size: 13px; color: var(--accent); white-space: nowrap;
+  display: flex; align-items: center; gap: 4px;
+  transition: opacity var(--transition);
+}
+.project-link:hover { opacity: 0.7; }
+.project-meta { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+
+/* ── EXPERIENCE ── */
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.timeline-item {
+  display: grid; grid-template-columns: 130px 1fr;
+  gap: 0 24px; padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+}
+.timeline-item:first-child { padding-top: 0; }
+.timeline-item:last-child { border-bottom: none; }
+.tl-period { font-size: 12px; color: var(--muted); padding-top: 3px; }
+.tl-company {
+  font-family: var(--font-display); font-size: 17px;
+  font-weight: 700; color: var(--text); margin-bottom: 2px;
+}
+.tl-role { font-size: 13px; color: var(--accent); margin-bottom: 10px; font-weight: 500; }
+.tl-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+.tl-tags { margin-top: 12px; }
+
+/* ── HIRE ── */
+.hire-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px; margin-top: 40px;
+}
+.hire-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 28px 24px;
+  display: flex; flex-direction: column;
+  transition: border-color var(--transition);
+  position: relative; overflow: hidden;
+}
+.hire-card.featured { border-color: var(--accent); }
+.hire-card.featured::before {
+  content: 'Most popular';
+  position: absolute; top: 12px; right: 12px;
+  font-size: 10px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--accent);
+  background: var(--accent-bg); padding: 3px 8px; border-radius: 4px;
+}
+.hire-price {
+  font-family: var(--font-display); font-size: 28px;
+  font-weight: 800; color: var(--text); margin-bottom: 2px;
+}
+.hire-price span { font-size: 14px; font-weight: 400; color: var(--muted); }
+.hire-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.hire-desc { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; flex: 1; }
+.hire-list { list-style: none; margin-bottom: 24px; }
+.hire-list li {
+  font-size: 13px; color: var(--muted); padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.hire-list li::before { content: '—'; color: var(--accent); }
+.hire-cta {
+  display: block; text-align: center;
+  padding: 10px; border-radius: var(--radius);
+  font-size: 13px; font-weight: 600;
+  background: var(--accent); color: #fff;
+  transition: opacity var(--transition);
+}
+.hire-cta:hover { opacity: 0.85; }
+.hire-cta.outline {
+  background: none; color: var(--text);
+  border: 1px solid var(--border);
+}
+.hire-cta.outline:hover { border-color: var(--subtle); }
+.slots-badge {
+  font-size: 12px; color: var(--muted);
+  text-align: center; margin-top: 10px;
+}
+
+/* ── STACK ── */
+.stack-groups { display: flex; flex-direction: column; gap: 28px; }
+.stack-group { }
+.stack-group-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--muted); margin-bottom: 12px;
+}
+.stack-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.stack-pill {
+  font-size: 13px; background: var(--tag-bg); color: var(--text);
+  padding: 6px 14px; border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+/* ── ABOUT ── */
+.about-grid {
+  display: grid; grid-template-columns: 1fr 260px;
+  gap: 48px; align-items: start;
+}
+.about-text p { color: var(--muted); line-height: 1.75; margin-bottom: 16px; }
+.about-text p strong { color: var(--text); font-weight: 500; }
+.about-sidebar { }
+.about-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.about-row:last-child { border-bottom: none; }
+.about-row-label { color: var(--muted); }
+.about-row-value { color: var(--text); font-weight: 500; text-align: right; }
+.social-links { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+.social-link {
+  font-size: 13px; color: var(--muted);
+  padding: 7px 14px; border-radius: var(--radius);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+  display: flex; align-items: center; gap: 6px;
+}
+.social-link:hover { color: var(--text); border-color: var(--subtle); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 40px 0; border-top: 1px solid var(--border);
+}
+.footer-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-copy { font-size: 13px; color: var(--muted); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 13px; color: var(--muted); transition: color var(--transition); }
+.footer-links a:hover { color: var(--text); }
+
+/* ── MOBILE ── */
+@media(max-width: 640px) {
+  .nav-links { display: none; }
+  .hero { padding: 60px 0 48px; }
+  .hero-stats { gap: 24px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .timeline-item { grid-template-columns: 1fr; gap: 4px; }
+  .tl-period { order: 2; margin-top: 4px; }
+}
+
+/* ── MISC ── */
+::selection { background: var(--accent); color: #fff; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+</style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Hamza Bin Sajid</h1>
-            <p>Full Stack Developer & DevOps Expert | AWS Certified | Milan, Italy</p>
-        </div>
-    </header>
 
-    <section id="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <p>
-                Hi! I'm Hamza, a passionate Full Stack Developer and DevOps Engineer with extensive experience building scalable web applications and cloud solutions.
-                Skilled in React, Next.js, Node.js, Laravel, and AWS. I thrive in solving complex problems and optimizing systems for high performance.
-            </p>
-        </div>
-    </section>
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Hamza<span>.</span></a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#projects">Projects</a>
+      <a href="#hire">Hire me</a>
+      <a href="#stack">Stack</a>
+      <a href="#about">About</a>
+    </div>
+    <div class="nav-right">
+      <div class="accent-switcher" title="Switch accent colour">
+        <div class="accent-dot active" data-a="blue"    onclick="setAccent('blue')"></div>
+        <div class="accent-dot"       data-a="emerald"  onclick="setAccent('emerald')"></div>
+        <div class="accent-dot"       data-a="violet"   onclick="setAccent('violet')"></div>
+        <div class="accent-dot"       data-a="amber"    onclick="setAccent('amber')"></div>
+        <div class="accent-dot"       data-a="rose"     onclick="setAccent('rose')"></div>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">Light</button>
+    </div>
+  </div>
+</nav>
 
-    <section id="skills">
-        <div class="container">
-            <h2>Skills</h2>
-            <ul>
-                <li>Frontend: React.js, Next.js, TypeScript</li>
-                <li>Backend: Node.js, Express, Laravel, PHP</li>
-                <li>DevOps & Cloud: AWS, Docker, CI/CD, Terraform</li>
-                <li>Databases: MySQL, PostgreSQL, MongoDB</li>
-                <li>Tools: Git, GitHub Actions, Redis, RabbitMQ</li>
-            </ul>
-        </div>
-    </section>
+<!-- HERO -->
+<div class="container">
+  <section class="hero" id="top">
+    <div class="hero-eyebrow">Open to consulting — 2 slots available</div>
+    <h1>Full-Stack Architect.<br/><em>Cloud-native.</em><br/>AWS-certified.</h1>
+    <p class="hero-sub">
+      I'm <strong>Hamza Sajid</strong> — a senior engineer and team lead with 7+ years building
+      scalable Laravel platforms, AWS infrastructure, and DevOps pipelines.
+      Currently completing an <strong>MSc in AI</strong> at the Università di Pisa.
+      Based in <strong>Milan, Italy</strong>.
+    </p>
+    <div class="hero-actions">
+      <a href="#hire" class="btn-primary">Work with me</a>
+      <a href="#projects" class="btn-secondary">See my work</a>
+      <a href="mailto:hamzazbinsajid@gmail.com" class="btn-secondary">Email me</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">7+</div>
+        <div class="stat-label">Years shipping</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Countries worked in</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">AWS</div>
+        <div class="stat-label">EKS certified</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">MSc</div>
+        <div class="stat-label">AI — Pisa</div>
+      </div>
+    </div>
+  </section>
 
-    <section id="projects">
-        <div class="container">
-            <h2>Projects</h2>
-            <ul>
-                <li>
-                    <strong>Migration Marketplace:</strong> Platform connecting migration specialists & clients.  
-                    <a href="https://migrationmarketplace.com.au" target="_blank">Visit</a>
-                </li>
-                <li>
-                    <strong>AI Governance Dashboard:</strong> AI system compliance tracker (Laravel & Vue.js).  
-                    <a href="#">GitHub Repo</a>
-                </li>
-                <li>
-                    <strong>Personal Portfolio:</strong> My GitHub Pages portfolio.  
-                    <a href="#">View</a>
-                </li>
-            </ul>
-        </div>
-    </section>
+  <!-- NOW -->
+  <section>
+    <div class="section-eyebrow">Now</div>
+    <div class="now-grid">
+      <div class="now-card">
+        <div class="now-badge">Building</div>
+        <div class="now-text">Migration Marketplace — platform connecting migration specialists & clients across Australia</div>
+      </div>
+      <div class="now-card">
+        <div class="now-badge">Studying</div>
+        <div class="now-text">MSc Artificial Intelligence at Università di Pisa — applying AI to production cloud systems</div>
+      </div>
+      <div class="now-card">
+        <div class="now-badge">Leading</div>
+        <div class="now-text">Engineering team at Work Initiatives — Laravel, Docker, AWS, CI/CD at scale</div>
+      </div>
+      <div class="now-card">
+        <div class="now-badge">Open</div>
+        <div class="now-text">2 consulting slots available — architecture audits & fractional tech lead</div>
+      </div>
+    </div>
+  </section>
 
-    <section id="certifications">
-        <div class="container">
-            <h2>Certifications</h2>
-            <ul>
-                <li>AWS Certified Developer – Associate</li>
-                <li>Full Stack Web Development Certification</li>
-                <li>DevOps Essentials Certification</li>
-            </ul>
-        </div>
-    </section>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-eyebrow">Projects</div>
+    <div class="section-title">Things I've built.</div>
+    <div class="section-sub">A selection of products and platforms I've shipped or am actively building.</div>
+    <div class="projects-grid">
 
-    <section id="contact">
-        <div class="container">
-            <h2>Contact</h2>
-            <p>Email: <a href="mailto:hamzazbinsajid@gmail.com">hamzazbinsajid@gmail.com</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/hamzabinsajid" target="_blank">linkedin.com/in/hamzabinsajid</a></p>
-            <p>GitHub: <a href="https://github.com/hamzazbinsajid" target="_blank">github.com/hamzazbinsajid</a></p>
+      <div class="project-card">
+        <div>
+          <div class="project-meta">2022 — Present</div>
+          <div class="project-name">Migration Marketplace</div>
+          <div class="project-desc">Platform connecting migration specialists and clients across Australia. Full-stack build including employer portal, candidate management, job aggregation, and a multi-site network with 10 web apps and a React Native mobile app.</div>
+          <div class="tag-row">
+            <span class="tag">Laravel</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">React Native</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">AWS Aurora</span>
+            <span class="tag">CloudFront</span>
+          </div>
         </div>
-    </section>
+        <a class="project-link" href="https://migrationmarketplace.com.au" target="_blank">Visit ↗</a>
+      </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Hamza Bin Sajid. All Rights Reserved.</p>
+      <div class="project-card">
+        <div>
+          <div class="project-meta">2023 — Present · Work Initiatives</div>
+          <div class="project-name">WorkinAus Network</div>
+          <div class="project-desc">Network of industry-specific job and skills sites across Australia — WorkinAus, WorkinShepparton, WorkinBendigo, WorkinCarpentry, WorkinECE and more. Built on a Laravel/PHP backend with a Next.js monorepo frontend and custom aggregation/CMS system.</div>
+          <div class="tag-row">
+            <span class="tag">Laravel</span>
+            <span class="tag">Next.js monorepo</span>
+            <span class="tag">AWS</span>
+            <span class="tag">Redis</span>
+            <span class="tag">PostgreSQL</span>
+          </div>
         </div>
-    </footer>
+        <a class="project-link" href="https://workinaus.com.au" target="_blank">Visit ↗</a>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-meta">2022 — 2024 · Cartlow, Dubai</div>
+          <div class="project-name">Cartlow Recommerce Platform</div>
+          <div class="project-desc">UAE's leading recommerce marketplace. Led a team of 6 engineers delivering buyer/seller portal features, payment integrations, and warehouse management tooling. Increased seller onboarding conversion by 30%.</div>
+          <div class="tag-row">
+            <span class="tag">Laravel</span>
+            <span class="tag">Vue.js</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Redis</span>
+            <span class="tag">Team Lead</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://cartlow.com" target="_blank">Visit ↗</a>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-meta">2024 · AI Governance</div>
+          <div class="project-name">AI Governance Dashboard</div>
+          <div class="project-desc">AI system compliance tracker built with Laravel and Vue.js. Questionnaire engine with multi-language JSON support, scoring, and reporting for organisations assessing AI systems against regulatory frameworks.</div>
+          <div class="tag-row">
+            <span class="tag">Laravel</span>
+            <span class="tag">Vue.js</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Docker</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://github.com/hamzazbinsajid" target="_blank">GitHub ↗</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="work">
+    <div class="section-eyebrow">Experience</div>
+    <div class="section-title">Where I've worked.</div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="tl-period">Jan 2026 — Present</div>
+        <div>
+          <div class="tl-company">Genyo.ai</div>
+          <div class="tl-role">Senior Software Engineer · Remote</div>
+          <div class="tl-desc">Building production-ready AI governance infrastructure for regulated financial institutions. Platform enables organisations to build, deploy, and govern AI models with full EU AI Act compliance, bias controls, and audit-ready traceability. ISO 27001 & DORA certified environment.</div>
+          <div class="tl-tags tag-row">
+            <span class="tag">AI / ML</span><span class="tag">Laravel</span><span class="tag">Vue.js</span><span class="tag">EU AI Act</span><span class="tag">Docker</span><span class="tag">AWS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-period">Mar 2023 — Present</div>
+        <div>
+          <div class="tl-company">Work Initiatives</div>
+          <div class="tl-role">Senior Software Engineer — Team Lead · Remote</div>
+          <div class="tl-desc">Architect and deliver Australia's first integrated digital workforce infrastructure — connecting job seekers, employers, recruiters and migration specialists across workinitiatives.com.au, migrationmarketplace.com.au, talentexpert.com.au, talentmobilityhub.com.au and 10+ web apps. Own end-to-end AWS infrastructure, CI/CD pipelines, and a Next.js monorepo with React Native mobile app.</div>
+          <div class="tl-tags tag-row">
+            <span class="tag">Laravel</span><span class="tag">Next.js</span><span class="tag">AWS</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span><span class="tag">Kubernetes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-period">Apr 2022 — Jan 2024</div>
+        <div>
+          <div class="tl-company">Cartlow</div>
+          <div class="tl-role">Development Team Lead → Software Engineer · Dubai, UAE</div>
+          <div class="tl-desc">Progressed from Software Engineer to Team Lead in 5 months at UAE's leading recommerce platform. Led 6-person engineering team, established Git strategy and deployment checklists that reduced production incidents by 45%. Delivered features driving 30% improvement in seller onboarding conversion.</div>
+          <div class="tl-tags tag-row">
+            <span class="tag">Laravel</span><span class="tag">Vue.js</span><span class="tag">MySQL</span><span class="tag">Redis</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-period">Feb 2019 — Apr 2022</div>
+        <div>
+          <div class="tl-company">Karigar Web Solutions</div>
+          <div class="tl-role">Laravel Developer · Sialkot, Pakistan</div>
+          <div class="tl-desc">Full-stack delivery for e-commerce, healthcare, and education clients. Built reusable Laravel libraries and REST APIs consumed by React and mobile front-ends. Raised test coverage from ~10% to 60% across active projects. Consistently rated 5/5 on client satisfaction.</div>
+          <div class="tl-tags tag-row">
+            <span class="tag">Laravel</span><span class="tag">PHP</span><span class="tag">React</span><span class="tag">MySQL</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HIRE -->
+  <section id="hire">
+    <div class="section-eyebrow">Consulting</div>
+    <div class="section-title">Work with me.</div>
+    <div class="section-sub">For teams needing architecture direction, cloud help, or a fractional engineering lead.</div>
+    <div class="hire-grid">
+
+      <div class="hire-card">
+        <div class="hire-price">$799 <span>/ engagement</span></div>
+        <div class="hire-name">Architecture Audit</div>
+        <div class="hire-desc">A focused review of your stack, infra, and backend architecture. Written report, no fluff.</div>
+        <ul class="hire-list">
+          <li>2-week async engagement</li>
+          <li>Full stack & infra review</li>
+          <li>Performance bottleneck map</li>
+          <li>Prioritised, costed roadmap</li>
+        </ul>
+        <a href="mailto:hamzazbinsajid@gmail.com?subject=Architecture Audit" class="hire-cta outline">Email me</a>
+        <div class="slots-badge">2 slots remaining</div>
+      </div>
+
+      <div class="hire-card featured">
+        <div class="hire-price">$1,500 <span>/ month</span></div>
+        <div class="hire-name">Fractional Tech Lead</div>
+        <div class="hire-desc">Embedded part-time as your technical lead. Set direction, unblock engineers, ship the hard parts.</div>
+        <ul class="hire-list">
+          <li>15–20 hrs/week, 3-month min</li>
+          <li>Architecture & API design</li>
+          <li>Code review & team levelling</li>
+          <li>CI/CD & AWS infrastructure</li>
+          <li>Weekly leadership sync</li>
+        </ul>
+        <a href="mailto:hamzazbinsajid@gmail.com?subject=Fractional Tech Lead" class="hire-cta">Apply for slot</a>
+        <div class="slots-badge">1 slot remaining</div>
+      </div>
+
+      <div class="hire-card">
+        <div class="hire-price">$120 <span>/ 60 min</span></div>
+        <div class="hire-name">Strategy Call</div>
+        <div class="hire-desc">One call. Bring your hardest architecture or cloud problem. Leave with a clear plan.</div>
+        <ul class="hire-list">
+          <li>60-min video call</li>
+          <li>Pre-read of your context</li>
+          <li>Recorded with action items</li>
+          <li>One week follow-up email</li>
+        </ul>
+        <a href="mailto:hamzazbinsajid@gmail.com?subject=Strategy Call" class="hire-cta outline">Book a call</a>
+        <div class="slots-badge">Open</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="section-eyebrow">Stack</div>
+    <div class="section-title">What I build with.</div>
+    <div class="stack-groups">
+      <div class="stack-group">
+        <div class="stack-group-label">Backend</div>
+        <div class="stack-pills">
+          <span class="stack-pill">Laravel</span><span class="stack-pill">PHP</span>
+          <span class="stack-pill">Node.js</span><span class="stack-pill">Bun.js</span>
+          <span class="stack-pill">REST APIs</span><span class="stack-pill">GraphQL</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <div class="stack-group-label">Frontend</div>
+        <div class="stack-pills">
+          <span class="stack-pill">Next.js</span><span class="stack-pill">React</span>
+          <span class="stack-pill">TypeScript</span><span class="stack-pill">Vue.js</span>
+          <span class="stack-pill">React Native</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <div class="stack-group-label">Cloud & DevOps</div>
+        <div class="stack-pills">
+          <span class="stack-pill">AWS EC2</span><span class="stack-pill">AWS S3</span>
+          <span class="stack-pill">AWS RDS</span><span class="stack-pill">AWS Lambda</span>
+          <span class="stack-pill">AWS EKS</span><span class="stack-pill">Docker</span>
+          <span class="stack-pill">Kubernetes</span><span class="stack-pill">Nginx</span>
+          <span class="stack-pill">GitHub Actions</span><span class="stack-pill">Terraform</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <div class="stack-group-label">Databases</div>
+        <div class="stack-pills">
+          <span class="stack-pill">PostgreSQL</span><span class="stack-pill">MySQL</span>
+          <span class="stack-pill">MongoDB</span><span class="stack-pill">Redis</span>
+          <span class="stack-pill">AWS Aurora</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <div class="stack-group-label">AI / ML</div>
+        <div class="stack-pills">
+          <span class="stack-pill">Python</span><span class="stack-pill">Machine Learning</span>
+          <span class="stack-pill">MSc AI — Pisa</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-eyebrow">About</div>
+    <div class="section-title">A bit more on me.</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p><strong>Hamza Sajid.</strong> Full-stack engineer and team lead with 7+ years shipping production software — from e-commerce platforms in Dubai to multi-site job networks across Australia.</p>
+        <p>My work sits at the intersection of backend architecture, cloud infrastructure, and engineering leadership. I care about systems that are fast, maintainable, and built to last — not just working code that ships once.</p>
+        <p>I started as a Laravel developer in Sialkot, moved through a fast-paced recommerce startup in Dubai, and now lead engineering remotely from Milan for Australian clients while completing an <strong>MSc in Artificial Intelligence</strong> at the Università di Pisa.</p>
+        <p>I'm AWS EKS certified, have 20,700+ followers on LinkedIn, and have been building on GitHub consistently for years. I'm open to fractional CTO work, architecture consulting, and interesting problems.</p>
+        <div class="social-links">
+          <a class="social-link" href="https://github.com/hamzazbinsajid" target="_blank">↗ GitHub</a>
+          <a class="social-link" href="https://linkedin.com/in/ihamzasajid" target="_blank">↗ LinkedIn</a>
+          <a class="social-link" href="mailto:hamzazbinsajid@gmail.com">✉ Email</a>
+        </div>
+      </div>
+      <div class="about-sidebar">
+        <div class="about-row"><span class="about-row-label">Currently</span><span class="about-row-value">Work Initiatives</span></div>
+        <div class="about-row"><span class="about-row-label">Based in</span><span class="about-row-value">Milan, Italy</span></div>
+        <div class="about-row"><span class="about-row-label">Timezone</span><span class="about-row-value">GMT+1</span></div>
+        <div class="about-row"><span class="about-row-label">Education</span><span class="about-row-value">MSc AI · Pisa</span></div>
+        <div class="about-row"><span class="about-row-label">Undergrad</span><span class="about-row-value">BSIT · 3.92 GPA</span></div>
+        <div class="about-row"><span class="about-row-label">Certified</span><span class="about-row-value">AWS EKS</span></div>
+        <div class="about-row"><span class="about-row-label">Open to</span><span class="about-row-value">Consulting</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 Hamza Sajid · Milan, Italy</div>
+      <div class="footer-links">
+        <a href="https://github.com/hamzazbinsajid" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/ihamzasajid" target="_blank">LinkedIn</a>
+        <a href="mailto:hamzazbinsajid@gmail.com">Email</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Theme toggle
+function toggleTheme(){
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeBtn').textContent = isDark ? 'Dark' : 'Light';
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+}
+
+// ── Accent switcher
+function setAccent(a){
+  document.documentElement.setAttribute('data-accent', a === 'blue' ? '' : a);
+  document.querySelectorAll('.accent-dot').forEach(d => {
+    d.classList.toggle('active', d.getAttribute('data-a') === a);
+  });
+  localStorage.setItem('accent', a);
+}
+
+// ── Restore preferences
+(function(){
+  const t = localStorage.getItem('theme');
+  const a = localStorage.getItem('accent');
+  if(t){ document.documentElement.setAttribute('data-theme', t); document.getElementById('themeBtn').textContent = t === 'dark' ? 'Light' : 'Dark'; }
+  if(a && a !== 'blue'){ setAccent(a); }
+})();
+</script>
 </body>
 </html>
